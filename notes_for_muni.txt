@@ -1,0 +1,22 @@
+1.Already Face recognisation python code over
+
+
+
+Folder Structure
+c                # Virtual environment folder (already created)
+ 
+ updated:
+ my_flask_app/             
+├── app.py                # Main Flask application script
+├── static/               # Folder for static files (CSS, JS, images)
+│   ├── css/              # Subfolder for CSS files (optional)
+│   │   └── styles.css    # Example CSS file (optional)
+│   └── js/               # Subfolder for JavaScript files (optional)
+│       └── script.js     # Example JavaScript file (optional)
+├── templates/            # Folder for HTML templates
+│   └── index.html        # Main HTML template for displaying the video feed
+├── known_faces/          # Folder containing images of known faces
+│   ├── person1.jpg       # Example image file
+│   └── person2.jpg       # Another example image file
+├── Attendance.xlsx       # Excel file for storing attendance records
+└── venv/                 # Virtual environment folder (already created)

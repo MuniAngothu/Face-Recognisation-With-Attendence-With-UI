@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Attendance</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #video-feed {
+            border: 2px solid #007bff;
+            display: block;
+            margin: auto;
+        }
+        #Muni{
+            width: 100%;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #notification {
+            margin-top: 20px; /* Add space above the notification */
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            width:450px;
+        }
+        #close-btn {
+            margin-top: 20px; /* Add margin for the button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="my-4">Live Attendance</h1>
+        
+        <div>
+            <img id="video-feed" src="{{ url_for('video_feed') }}" width="640" height="480">
+        </div>
+        <div id="Muni">
+        <div id="notification"></div>
+    </div>
+        <button id="close-btn" class="btn btn-primary">Close Webcam and Go Home</button>
+    </div>
+
+    <script>
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Call the Flask server to fetch attendance status periodically
+        function checkAttendance() {
+            fetch('/close_webcam')  // You can add a new endpoint if necessary
+                .then(response => response.json())
+                .then(data => {
+                    showNotification(data.message);
+                });
+        }
+
+        setInterval(checkAttendance, 5000);  // Check attendance every 5 seconds
+
+        // Close webcam and redirect to home on button click
+        document.getElementById('close-btn').addEventListener('click', () => {
+            fetch('/close_webcam')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);  // Log the message for debugging
+                    window.location.href = '/';  // Redirect to home
+                });
+        });
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
